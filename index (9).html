@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whitology – 누렇던 치아, 단 7일!</title>
+  
+  
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #4f46e5;
+      --indigo-dark: #4338ca;
+      --indigo-900: #1e1b4b;
+      --pink: #ec4899;
+      --yellow: #facc15;
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --slate-50: #f8fafc;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-900: #0f172a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── FADE-IN ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ── B-GRADE BANNER ── */
+    .banner {
+      background: var(--yellow);
+      padding: 10px 0;
+      text-align: center;
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-bottom: 4px solid var(--black);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--slate-50);
+      padding: 80px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+    @media (min-width: 1024px) {
+      .hero { flex-direction: row; padding: 80px 80px; }
+    }
+
+    .hero-text { flex: 1; }
+    .hero h1 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(52px, 9vw, 96px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-style: italic;
+      text-transform: uppercase;
+      color: var(--indigo);
+    }
+    .hero h1 .highlight {
+      color: var(--pink);
+      background: var(--yellow);
+      padding: 0 16px;
+      display: inline-block;
+    }
+    .hero-sub {
+      margin-top: 24px;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 700;
+      color: var(--slate-600);
+      max-width: 480px;
+      line-height: 1.5;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 36px;
+      background: var(--indigo);
+      color: var(--white);
+      padding: 20px 40px;
+      border-radius: 999px;
+      font-size: clamp(18px, 2vw, 24px);
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      border: none;
+      cursor: pointer;
+      box-shadow: 8px 8px 0 var(--black);
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .btn-primary:hover {
+      background: var(--indigo-dark);
+      transform: translate(-2px, -2px);
+      box-shadow: 10px 10px 0 var(--black);
+    }
+    .btn-primary:active {
+      transform: translate(4px, 4px);
+      box-shadow: 4px 4px 0 var(--black);
+    }
+    .btn-primary svg { width: 28px; height: 28px; }
+
+    .hero-social {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .avatars { display: flex; }
+    .avatars img {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      margin-left: -8px;
+      object-fit: cover;
+    }
+    .avatars img:first-child { margin-left: 0; }
+    .hero-social p { font-weight: 700; color: var(--slate-500); }
+
+    .hero-image { flex: 1; position: relative; }
+    .hero-image-frame {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 8px solid var(--black);
+      box-shadow: 20px 20px 0 var(--pink);
+      position: relative;
+    }
+    .hero-image-frame img { width: 100%; height: auto; }
+    .hero-image-badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: var(--black);
+      color: var(--white);
+      padding: 8px 16px;
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 18px;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    /* ── COMPARISON ── */
+    .comparison {
+      padding: 96px 24px;
+      background: var(--indigo-900);
+      color: var(--white);
+      overflow: hidden;
+    }
+    .comparison-inner { max-width: 1100px; margin: 0 auto; }
+    .comparison h2 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(36px, 6vw, 72px);
+      text-align: center;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .comparison-sub {
+      text-align: center;
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 700;
+      color: #a5b4fc;
+      margin-bottom: 64px;
+      font-style: italic;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .comparison-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .comparison-img-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 4px solid var(--white);
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .comparison-img-wrap:hover { transform: scale(1.02); }
+    .comparison-img-wrap img { width: 100%; display: block; }
+    .comparison-img-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 32px 24px 24px;
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 28px;
+      font-style: italic;
+    }
+
+    .why-box {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(8px);
+    }
+    .why-box h3 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 28px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .why-box ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .why-box li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .why-box li svg { color: var(--pink); flex-shrink: 0; }
+
+    .quote-box {
+      background: var(--pink);
+      border: 4px solid var(--black);
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: 10px 10px 0 var(--white);
+      margin-top: 24px;
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(18px, 2vw, 22px);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ── PRODUCT LINEUP ── */
+    .lineup {
+      padding: 96px 24px;
+    }
+    .lineup-inner { max-width: 1100px; margin: 0 auto; }
+    .lineup h2 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(40px, 7vw, 80px);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 80px;
+    }
+    .lineup h2 span { color: var(--indigo); }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media (min-width: 768px) {
+      .product-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .product-card { position: relative; }
+    .product-img-wrap {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 8px solid var(--black);
+      margin-bottom: 24px;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-img-wrap { transform: translateY(-10px); }
+    .product-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.1); }
+
+    .product-info {
+      color: var(--white);
+      padding: 24px;
+      border-radius: 16px;
+      border: 4px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+    .product-info.blue { background: #3b82f6; }
+    .product-info.orange { background: #f97316; }
+    .product-info.purple { background: #a855f7; }
+    .product-info h3 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .product-info p { font-weight: 700; opacity: 0.9; }
+
+    /* ── AI APP ── */
+    .ai-section {
+      background: var(--slate-900);
+      color: var(--white);
+      padding: 96px 24px;
+      overflow: hidden;
+    }
+    .ai-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .ai-inner { flex-direction: row; }
+    }
+    .ai-img-wrap {
+      flex: 1;
+      position: relative;
+      max-width: 400px;
+    }
+    .ai-img-wrap img { width: 100%; }
+    .ai-bounce {
+      position: absolute;
+      top: -32px; right: -32px;
+      background: var(--indigo);
+      border: 4px solid var(--white);
+      border-radius: 50%;
+      width: 80px; height: 80px;
+      display: flex; align-items: center; justify-content: center;
+      animation: bounce 2s infinite;
+    }
+    .ai-bounce svg { width: 36px; height: 36px; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .ai-text { flex: 1; }
+    .ai-text h2 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 1;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+    .ai-text h2 span { color: #818cf8; }
+    .ai-text p {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--slate-400);
+      margin-bottom: 32px;
+    }
+
+    .ai-steps { display: flex; flex-direction: column; gap: 16px; }
+    .ai-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .ai-step-num {
+      width: 48px; height: 48px;
+      background: var(--indigo);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .ai-step p { font-size: 18px; font-weight: 700; }
+
+    /* ── DEVICE ── */
+    .device-section {
+      padding: 96px 24px;
+      text-align: center;
+      background: var(--white);
+    }
+    .device-section h2 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(44px, 8vw, 96px);
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+    }
+    .device-section h2 span { color: var(--pink); }
+    .device-img-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .device-img-wrap img {
+      width: 100%;
+      border-radius: 24px;
+      border: 4px solid var(--black);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.15);
+    }
+    .device-badge {
+      position: absolute;
+      bottom: -40px; right: -20px;
+      background: var(--yellow);
+      color: var(--black);
+      padding: 28px 28px;
+      border-radius: 16px;
+      border: 4px solid var(--black);
+      box-shadow: 10px 10px 0 var(--black);
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(18px, 2vw, 26px);
+      line-height: 1.3;
+      transform: rotate(6deg);
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 96px 24px;
+      background: var(--yellow);
+      border-top: 8px solid var(--black);
+      border-bottom: 8px solid var(--black);
+    }
+    .testimonials h2 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      text-align: center;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: 64px;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .testimonial-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .testimonial-card {
+      background: var(--white);
+      border: 4px solid var(--black);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 8px 8px 0 var(--black);
+    }
+    .stars { display: flex; gap: 4px; margin-bottom: 16px; }
+    .stars svg { width: 20px; height: 20px; fill: var(--black); }
+    .testimonial-card blockquote {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .testimonial-card cite {
+      font-weight: 900;
+      color: var(--slate-500);
+      font-style: normal;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--pink);
+      color: var(--white);
+      padding: 120px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      transform: rotate(12deg) scale(1.5);
+      pointer-events: none;
+    }
+    .cta-bg svg { width: 80px; height: 80px; }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta h2 {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(52px, 9vw, 112px);
+      line-height: 1;
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .cta h2 span {
+      background: var(--white);
+      color: var(--pink);
+      padding: 0 24px;
+      display: inline-block;
+    }
+    .cta-promo {
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--black);
+      color: var(--white);
+      padding: 28px 64px;
+      border-radius: 999px;
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: clamp(22px, 3vw, 36px);
+      border: none;
+      cursor: pointer;
+      box-shadow: 15px 15px 0 var(--white);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-cta:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 18px 18px 0 var(--white);
+    }
+    .btn-cta:active {
+      transform: translate(6px, 6px);
+      box-shadow: 9px 9px 0 var(--white);
+    }
+    .cta-box-img {
+      margin-top: 64px;
+    }
+    .cta-box-img img {
+      max-width: 480px;
+      margin: 0 auto;
+      border-radius: 24px;
+      border: 4px solid var(--white);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 48px 24px;
+      text-align: center;
+      border-top: 8px solid var(--yellow);
+    }
+    footer .logo {
+      font-family: 'Oswald', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 28px;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    footer .copy {
+      color: var(--slate-500);
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    footer .links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      color: var(--slate-400);
+      font-weight: 700;
+    }
+    footer .links a:hover { color: var(--white); }
+
+    /* container util */
+    .container { max-width: 1100px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+  <!-- B-Grade Banner -->
+  <div class="banner">⚠️ 경고: 너무 하얘져서 눈이 부실 수 있음 ⚠️</div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text reveal-left">
+      <h1>누렁니 탈출<br><span class="highlight">단 7일!</span></h1>
+      <p class="hero-sub">
+        "이렇게 데이트 할거야?"<br>
+        꿈꾸던 환한 미소, Whitology가 완성해드립니다.
+      </p>
+      <button class="btn-primary" onclick="alert('준비중입니다!')">
+        지금 바로 시작하기
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+      <div class="hero-social">
+        <div class="avatars">
+          <img src="https://picsum.photos/seed/11/100/100" alt="user" referrerpolicy="no-referrer">
+          <img src="https://picsum.photos/seed/12/100/100" alt="user" referrerpolicy="no-referrer">
+          <img src="https://picsum.photos/seed/13/100/100" alt="user" referrerpolicy="no-referrer">
+          <img src="https://picsum.photos/seed/14/100/100" alt="user" referrerpolicy="no-referrer">
+          <img src="https://picsum.photos/seed/15/100/100" alt="user" referrerpolicy="no-referrer">
+        </div>
+        <p>이미 12,450명이 하얘졌습니다!</p>
+      </div>
+    </div>
+    <div class="hero-image reveal-scale">
+      <div class="hero-image-frame">
+        <img src="images/before3.png" alt="Whitology Before After">
+        <div class="hero-image-badge">REAL BEFORE &amp; AFTER</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section class="comparison">
+    <div class="comparison-inner">
+      <h2 class="reveal">치아 색 때문에 고민?</h2>
+      <p class="comparison-sub reveal">더 이상 숨기지 마세요. 자신 있게 웃으세요!</p>
+      <div class="comparison-grid">
+        <div class="comparison-img-wrap reveal">
+          <img src="images/before4.png" alt="Close up teeth">
+          <div class="comparison-img-caption">압도적인 미백 효과</div>
+        </div>
+        <div class="reveal">
+          <div class="why-box">
+            <h3>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15" stroke-width="1">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              왜 Whitology 인가?
+            </h3>
+            <ul>
+              <li>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+                식약처 인증 미백 성분 함유
+              </li>
+              <li>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+                7일 만에 완성되는 화이트닝
+              </li>
+              <li>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+                시림 증상 최소화 공법
+              </li>
+              <li>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+                AI 구강 분석 앱 연동 케어
+              </li>
+            </ul>
+          </div>
+          <div class="quote-box">
+            "커피, 카레, 담배...<br>그 어떤 착색도 Whitology 앞에선 무릎 꿇습니다."
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Lineup -->
+  <section class="lineup">
+    <div class="lineup-inner">
+      <h2 class="reveal">THE <span>WHITOLOGY</span> LINEUP</h2>
+      <div class="product-grid">
+        <div class="product-card reveal">
+          <div class="product-img-wrap">
+            <img src="images/whitening-pen.jpeg" alt="Whitening Care">
+          </div>
+          <div class="product-info blue">
+            <h3>Whitening Care</h3>
+            <p>강력한 미백 젤</p>
+          </div>
+        </div>
+        <div class="product-card reveal">
+          <div class="product-img-wrap">
+            <img src="images/gum-care.jpeg" alt="Gum Care">
+          </div>
+          <div class="product-info orange">
+            <h3>Gum Care</h3>
+            <p>잇몸 건강까지 생각한 케어</p>
+          </div>
+        </div>
+        <div class="product-card reveal">
+          <div class="product-img-wrap">
+            <img src="images/fluoride-care.jpeg" alt="Fluoride Care">
+          </div>
+          <div class="product-info purple">
+            <h3>Fluoride Care</h3>
+            <p>충치 예방 불소 케어</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI App -->
+  <section class="ai-section">
+    <div class="ai-inner">
+      <div class="ai-img-wrap reveal-scale">
+        <img src="images/app-screen.jpeg" alt="Whitology App">
+        <div class="ai-bounce">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+        </div>
+      </div>
+      <div class="ai-text reveal">
+        <h2>스마트한<br><span>AI 구강 진단</span></h2>
+        <p>Whitology 앱으로 당신의 치아 상태를 실시간으로 분석하세요.<br>AI가 제안하는 맞춤형 케어 솔루션!</p>
+        <div class="ai-steps">
+          <div class="ai-step">
+            <div class="ai-step-num">01</div>
+            <p>치아 사진 촬영</p>
+          </div>
+          <div class="ai-step">
+            <div class="ai-step-num">02</div>
+            <p>AI 정밀 분석 (치태, 잇몸, 충치)</p>
+          </div>
+          <div class="ai-step">
+            <div class="ai-step-num">03</div>
+            <p>맞춤형 미백 플랜 제공</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Device -->
+  <section class="device-section">
+    <h2 class="reveal">THE <span>ULTIMATE</span> DEVICE</h2>
+    <div class="device-img-wrap reveal">
+      <img src="images/hero-device.jpeg" alt="Whitology Device">
+      <div class="device-badge">특허 받은<br>LED 기술!</div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials" style="padding-top: 140px;">
+    <h2 class="reveal">진짜 후기가 증명합니다!</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"진짜 일주일 만에 하얘져서 놀랐어요. 이제 웃을 때 입 안 가려요!"</blockquote>
+        <cite>- 김*진 고객님</cite>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"커피 중독자라 치아 색 고민 많았는데, 이거 쓰고 광명 찾았습니다."</blockquote>
+        <cite>- 이*우 고객님</cite>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"앱이랑 연동되니까 관리하는 재미가 있네요. 강추합니다!"</blockquote>
+        <cite>- 박*아 고객님</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-bg" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/></svg>
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/></svg>
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/></svg>
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/></svg>
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/></svg>
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/></svg>
+    </div>
+    <div class="cta-inner">
+      <h2 class="reveal">당신의 미소를<br><span>업그레이드</span> 하세요!</h2>
+      <p class="cta-promo reveal">지금 구매하면 7일 체험 키트 증정!</p>
+      <button class="btn-cta reveal" onclick="alert('준비중입니다!')">지금 바로 구매하기</button>
+      <div class="cta-box-img reveal">
+        <img src="images/Whitology3_Package.png" alt="Whitology Box">
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="logo">WHITOLOGY</p>
+    <p class="copy">© 2026 Whitology Inc. All Rights Reserved.</p>
+    <div class="links">
+      <a href="#">이용약관</a>
+      <a href="#">개인정보처리방침</a>
+      <a href="#">고객센터</a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
